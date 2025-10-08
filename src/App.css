@@ -1,0 +1,121 @@
+body {
+    background-color: var(--color-bg);
+}
+
+.headshot {
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    width: clamp(100px, 20vw, 140px);
+    margin: 10px 0;
+    border: 2px solid var(--color-border);
+}
+
+.container {
+    position: relative;
+    z-index: 5;
+    background-color: var(--color-green);
+    border: 2px solid var(--color-border);
+    padding: 20px;
+    width: 100%;
+    height: clamp(500px, 90vh, 700px);
+    width: clamp(300px, 50vw, 400px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-border {
+    position: relative;
+    z-index: 5;
+    margin: 0 auto;
+    border: 2px solid var(--color-border);
+    padding: clamp(20px, 4vw, 40px);
+    width: fit-content;
+    height: fit-content;
+    background-color: var(--color-bg-secondary);
+}
+.social-links {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.social-links a {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-links a:hover,
+.social-links a:focus {
+    background: var(--color-blue);
+    border: 2px solid var(--color-text);
+    border-radius: 2px;
+}
+
+.social-links a svg {
+    width: 35px;
+    height: 35px;
+}
+
+.shape-1 {
+    position: absolute;
+    z-index: 5;
+    top: 60px;
+    left: calc(-15px - clamp(20px, 4vw, 40px));
+    width: 140px;
+    height: 140px;
+    background-color: var(--color-light-orange);
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
+}
+
+.shape-2 {
+    position: absolute;
+    z-index: 3;
+    top: 30px;
+    left: calc(-65px - clamp(20px, 4vw, 40px));
+    width: 200px;
+    height: 200px;
+    background-color: var(--color-orange);
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
+}
+
+.shape-3 {
+    position: absolute;
+    transform: rotate(45deg);
+    z-index: 4;
+    bottom: 180px;
+    right: calc(-35px - clamp(20px, 4vw, 40px));
+    width: 200px;
+    height: 200px;
+    background-color: var(--color-purple);
+    border: 2px solid var(--color-border);
+    border-radius: 2px;
+}
+
+.shape-4 {
+    position: absolute;
+    transform: rotate(45deg);
+    z-index: 3;
+    bottom: 120px;
+    right: calc(-35px - clamp(20px, 4vw, 40px));
+    width: 180px;
+    height: 180px;
+    background-color: var(--color-dark-purple);
+    border: 2px solid var(--color-border);
+    border-radius: 2px;
+}
+
+.app {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+}
