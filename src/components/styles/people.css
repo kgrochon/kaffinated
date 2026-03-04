@@ -1,0 +1,186 @@
+.people-container {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    min-height: 100vh;
+}
+
+.people-sidebar {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.people-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.person-item {
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    border: 2px solid var(--color-border);
+    background-color: var(--color-green);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-align: left;
+}
+
+.person-item:hover {
+    background-color: var(--color-blue);
+    transform: translateX(5px);
+}
+
+.person-item.active {
+    background-color: var(--color-purple);
+    border-color: var(--color-text);
+}
+
+.person-item-name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+    color: var(--color-text);
+}
+
+.person-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--color-yellow);
+    border: 2px solid var(--color-border);
+    overflow-y: auto;
+    max-height: 90vh;
+}
+
+.person-name {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: var(--color-text);
+}
+
+.carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 10px;
+}
+
+.carousel-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: 2px solid var(--color-border);
+    background-color: var(--color-bg-secondary);
+    min-height: 500px;
+    max-height: 500px;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    max-height: 500px;
+}
+
+.carousel-button {
+    background-color: var(--color-purple);
+    border: 2px solid var(--color-border);
+    color: var(--color-text);
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.carousel-button:hover {
+    background-color: var(--color-dark-purple);
+    transform: scale(1.1);
+}
+
+.carousel-button:active {
+    transform: scale(0.95);
+}
+
+.carousel-indicator {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 30px;
+    color: var(--color-text);
+}
+
+.person-about {
+    max-width: 700px;
+    text-align: left;
+    line-height: 1.8;
+}
+
+.person-about p {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: var(--color-text);
+}
+
+.person-about p:last-child {
+    margin-bottom: 0;
+}
+
+.person-about strong {
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .people-container {
+        flex-direction: column;
+    }
+
+    .people-sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .people-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .person-item {
+        margin-bottom: 0;
+    }
+
+    .carousel {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .carousel-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+
+    .carousel-image-container {
+        min-height: 300px;
+        max-height: 400px;
+    }
+}

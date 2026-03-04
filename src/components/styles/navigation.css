@@ -1,0 +1,22 @@
+.nav-links {
+    display: flex;
+    gap: 10px;
+}
+
+.home-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: "Apfel Grotezk", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.kaffinated-icon {
+    width: 130px !important;
+}
