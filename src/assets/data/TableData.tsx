@@ -29,7 +29,7 @@ export const castData = [
 export type SeasonGroup = {
   season: number;
   subtitle: string;
-  players: { name: string; photo: string }[];
+  players: { name: string; photo: string; tribe: string; placement: number }[];
 };
 
 /* Mid-century palette: warm creams, terracotta, olive, mustard, with bold black strokes */

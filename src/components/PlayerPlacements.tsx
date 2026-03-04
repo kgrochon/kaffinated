@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { castData, palette, eraStyles, getEra } from "../assets/data/TableData";
+import { castData, palette } from "../assets/data/TableData";
 import "./styles/placements.css";
 
 type SortOption = 'best' | 'average' | 'times' | 'tribe' | 'nameAsc' | 'nameDesc';
@@ -95,7 +95,7 @@ export default function PlayerPlacements() {
       let currentTribe = '';
       let tribeRank = 1;
 
-      return sortedPlayers.map((player, index) => {
+      return sortedPlayers.map((player, _index) => {
         if (player.tribe !== currentTribe) {
           currentTribe = player.tribe;
           tribeRank = 1;
@@ -242,8 +242,6 @@ export default function PlayerPlacements() {
                 {/* Placements Timeline */}
                 <div className="placements-timeline">
                   {player.seasons.map((season) => {
-                    const era = getEra(season.season);
-
                     return (
                       <div
                         key={`${player.name}-${season.season}`}
