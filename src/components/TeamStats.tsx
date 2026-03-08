@@ -62,7 +62,6 @@ export default function TeamStats() {
       <div className="team-stats-wrapper">
         {/* Header */}
         <div className="team-stats-header">
-          <h1 className="team-stats-title">Team Stats</h1>
           <p className="team-stats-description">
             Players grouped by tribe with elimination status
           </p>
