@@ -28,9 +28,9 @@ export const Home = () => {
                         <Link to="/survivor" className="button">
                             Survivor
                         </Link>
-                        <Link to="/tier-list" className="button">
+                        {/* <Link to="/tier-list" className="button">
                             Tier List
-                        </Link>
+                        </Link> */}
                     </div>
 
                     <aside
