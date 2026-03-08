@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { castData, palette, tribeColors } from "../assets/data/TableData";
+import { castData, tribeColors } from "../assets/data/TableData";
 import { eliminated } from "../assets/data/images/ConnectionData";
 import "./styles/teamstats.css";
 
@@ -25,7 +25,7 @@ export default function TeamStats() {
 
       const enhanced: EnhancedPlayer = {
         name: player.name,
-        tribe: player.tribe,
+        tribe: player.tribe as "Cila" | "Vatu" | "Kalo",
         photo: player.photo,
         status: eliminationRecord
           ? eliminationRecord.type === "injury"
