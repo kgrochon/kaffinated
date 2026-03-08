@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Home } from "./pages/Home";
-import { Survivor } from "./components/Survivor";
+import { Survivor } from "./pages/Survivor";
+import { TierList } from "./components/tier-list/TierList";
 
 function App() {
     return (
@@ -10,6 +11,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/survivor" element={<Survivor />} />
+                    <Route path="/tier-list" element={<TierList />} />
                 </Routes>
             </BrowserRouter>
         </div>

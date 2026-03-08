@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { LogoIcon, KaffinatedIcon } from "../assets/images/Library";
-import "./styles/navigation.css";
+import { LogoIcon, KaffinatedIcon } from "../icons/Library";
+import "./navigation.css";
 
 export const Navigation = () => {
     return (

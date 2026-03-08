@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import headshot from "../assets/images/headshot.jpeg";
-import { GithubIcon, LinkedinIcon, MailIcon } from "../assets/images/Library";
+import { GithubIcon, LinkedinIcon, MailIcon } from "../components/icons/Library";
 
 export const Home = () => {
     return (
@@ -27,6 +27,9 @@ export const Home = () => {
                     <div className="actions nav">
                         <Link to="/survivor" className="button">
                             Survivor
+                        </Link>
+                        <Link to="/tier-list" className="button">
+                            Tier List
                         </Link>
                     </div>
 

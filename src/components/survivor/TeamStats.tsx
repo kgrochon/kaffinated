@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { castData, tribeColors } from "../assets/data/TableData";
-import { eliminated } from "../assets/data/images/ConnectionData";
+import { castData, tribeColors } from "../../data/table";
+import { eliminated } from "../../data/connections";
 import "./styles/teamstats.css";
 
 interface EnhancedPlayer {

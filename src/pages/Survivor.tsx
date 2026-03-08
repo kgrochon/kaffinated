@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Navigation } from "./Navigation";
-import Table from "./Table";
-import PlayerConnections from "./PlayerConnections";
-import PlayerPlacements from "./PlayerPlacements";
-import TeamStats from "./TeamStats";
+import { Navigation } from "../components/navigation/Navigation";
+import Table from "../components/survivor/Table";
+import PlayerConnections from "../components/survivor/PlayerConnections";
+import PlayerPlacements from "../components/survivor/PlayerPlacements";
+import TeamStats from "../components/survivor/TeamStats";
 import "./styles/survivor.css";
 
 type ChartView = "seasons" | "connections" | "placements" | "teams";

@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { type SeasonGroup, castData, eraStyles, getEra, palette } from "../assets/data/TableData";
+import { type SeasonGroup, castData, eraStyles, getEra, palette } from "../../data/table";
 import "./styles/table.css";
 
 export default function Table() {

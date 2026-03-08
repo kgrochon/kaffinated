@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { castData, palette } from "../assets/data/TableData";
+import { castData, palette } from "../../data/table";
 import "./styles/connections.css";
 
 export default function PlayerConnections() {
