@@ -44,9 +44,9 @@ export const palette = {
   slate: "#799db5",
   warmGray: "#8C8578",
   lightStroke: "#D4CABB",
-  cila: "#EB7443",
-  vatu: "#E86D9C",
-  kalo: "#6CAEA3",
+  cila: "rgb(234 105 51)",
+  vatu: "rgb(230 19 100)",
+  kalo: "rgb(47 141 126)",
 };
 
 export const tribeColors = [

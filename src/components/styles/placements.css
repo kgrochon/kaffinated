@@ -20,7 +20,7 @@
     margin-bottom: 20px;
     flex-wrap: wrap;
     padding: 16px;
-    background-color: #ffffff;
+    background-color: #f8eddd;
     border: 2px solid var(--color-text);
 }
 
@@ -57,7 +57,7 @@
     gap: 12px;
     margin-bottom: 32px;
     padding: 16px;
-    background-color: #ffffff;
+    background-color: #f8eddd;
     border: 2px solid var(--color-text);
 }
 

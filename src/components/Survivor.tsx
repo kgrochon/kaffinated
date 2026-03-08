@@ -3,9 +3,10 @@ import { Navigation } from "./Navigation";
 import Table from "./Table";
 import PlayerConnections from "./PlayerConnections";
 import PlayerPlacements from "./PlayerPlacements";
+import TeamStats from "./TeamStats";
 import "./styles/survivor.css";
 
-type ChartView = "seasons" | "connections" | "placements";
+type ChartView = "seasons" | "connections" | "placements" | "teams";
 
 export const Survivor = () => {
     const [activeChart, setActiveChart] = useState<ChartView>("seasons");
@@ -44,6 +45,12 @@ export const Survivor = () => {
                 >
                     Placements
                 </button>
+                <button
+                    className={`survivor-nav-button ${activeChart === "teams" ? "active" : ""}`}
+                    onClick={() => setActiveChart("teams")}
+                >
+                    Team Stats
+                </button>
             </div>
 
             {/* Chart Content */}
@@ -51,6 +58,7 @@ export const Survivor = () => {
                 {activeChart === "seasons" && <Table />}
                 {activeChart === "connections" && <PlayerConnections />}
                 {activeChart === "placements" && <PlayerPlacements />}
+                {activeChart === "teams" && <TeamStats />}
             </div>
         </div>
     );

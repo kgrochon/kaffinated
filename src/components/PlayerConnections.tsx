@@ -68,7 +68,7 @@ export default function PlayerConnections() {
           <p>
           Explore the web of relationships between returning players
         </p>
-        <p className="survivor-subtext">
+        <p className="survivor-subtex">
           Click or hover over a player to see their network
           </p>
         </div>

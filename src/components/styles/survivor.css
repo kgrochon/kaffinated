@@ -53,6 +53,7 @@
 }
 
 .survivor-nav-button {
+    background-color: #f8eddd;
     padding: 12px 24px;
     font-family: "Apfel Grotezk", system-ui, -apple-system, BlinkMacSystemFont,
         "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -60,7 +61,6 @@
     font-weight: 500;
     letter-spacing: 1px;
     text-transform: uppercase;
-    background-color: #ffffff;
     color: var(--color-text);
     border: 2px solid var(--color-text);
     cursor: pointer;

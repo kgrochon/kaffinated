@@ -142,7 +142,6 @@ body {
 .notes {
     min-height: 100vh;
     height: fit-content;
-    overflow: scroll;
 }
 
 .formal-nav {

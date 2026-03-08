@@ -1,0 +1,332 @@
+/* Team Stats Container */
+.team-stats-container {
+    min-height: 100vh;
+    background-color: var(--color-bg);
+    font-family: "Apfel Grotezk", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--color-text);
+    padding: 0 20px 40px 20px;
+}
+
+.team-stats-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header Section */
+.team-stats-header {
+    text-align: center;
+    margin-bottom: 32px;
+    animation: fadeInUp 0.6s ease;
+}
+
+.team-stats-title {
+    font-weight: 700;
+    font-size: clamp(2.5rem, 6vw, 3.25rem);
+    letter-spacing: 2px;
+    color: var(--color-text);
+    line-height: 1;
+    margin-bottom: 16px;
+}
+
+.team-stats-description {
+    font-weight: 400;
+    font-size: 15px;
+    color: var(--color-text-muted);
+    max-width: 500px;
+    margin: 0 auto 24px;
+}
+
+.team-stats-controls {
+    margin-top: 20px;
+}
+
+.toggle-button {
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 2px solid var(--color-text);
+    color: var(--color-text);
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.toggle-button:hover {
+    background-color: var(--color-orange);
+    border-color: var(--color-text);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Status Legend */
+.status-legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.legend-indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--color-text);
+    border-radius: var(--radius-sm);
+}
+
+.legend-indicator.active {
+    background-color: #ffffff;
+}
+
+.legend-indicator.eliminated {
+    background-color: #ad373b;
+}
+
+.legend-indicator.injured {
+    background-color: #fcdc4d;
+}
+
+/* Team Section */
+.team-section {
+    margin-bottom: 48px;
+    animation: fadeInUp 0.6s ease;
+}
+
+.team-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-left: 6px solid;
+    background-color: #f8eddd;
+    margin-bottom: 20px;
+    border-top: 2px solid var(--color-text);
+    border-right: 2px solid var(--color-text);
+    border-bottom: 2px solid var(--color-text);
+}
+
+.team-name {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.team-count {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    font-weight: 600;
+}
+
+.count-active {
+    font-size: 24px;
+    color: var(--color-text);
+}
+
+.count-separator {
+    font-size: 18px;
+    color: var(--color-text-muted);
+}
+
+.count-total {
+    font-size: 18px;
+    color: var(--color-text-muted);
+}
+
+.count-label {
+    font-size: 12px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 4px;
+}
+
+/* Player Grid */
+.player-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 0 8px;
+}
+
+/* Player Cards */
+.player-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: var(--radius-sm);
+    background-color: #f8eddd;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.player-card:hover,
+.player-card.hovered {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+}
+
+.player-card.eliminated {
+    background-color: rgb(145, 42, 45);  
+    .player-name {
+        color: #f8eddd;
+    }
+    .player-status {
+        color: #f8eddd;
+    }
+}
+
+.player-card.injured {
+    background-color: #fcdc4d;
+}
+
+.player-photo-container {
+    position: relative;
+    width: 90px;
+    height: 90px;
+}
+
+.player-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 2px solid var(--color-text);
+    border-radius: var(--radius-sm);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* Status Badge */
+.status-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--color-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    box-shadow: var(--shadow-sm);
+}
+
+.status-badge.eliminated {
+    background-color: #c5474c;
+}
+
+.status-badge.injured {
+    background-color: #fae480;
+    color: var(--color-text);
+}
+
+/* Episode Badge */
+.episode-badge {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background-color: var(--color-text);
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+}
+
+/* Player Info */
+.player-info {
+    text-align: center;
+    width: 100%;
+}
+
+.player-name {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--color-text);
+}
+
+.player-status {
+    font-size: 11px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .team-header {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .player-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 12px;
+    }
+
+    .player-photo-container {
+        width: 70px;
+        height: 70px;
+    }
+
+    .status-badge {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .player-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+    }
+
+    .player-card {
+        padding: 10px;
+    }
+
+    .player-photo-container {
+        width: 60px;
+        height: 60px;
+    }
+}
