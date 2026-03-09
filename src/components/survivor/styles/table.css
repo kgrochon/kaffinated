@@ -186,9 +186,9 @@
 }
 
 .photo-frame {
-    width: 100%;
+    width: 90px;
+    height: 90px;
     overflow: visible;
-    height: 56px;
     border-top-left-radius: 2px;    
     border-top-right-radius: 2px;
     position: relative;
