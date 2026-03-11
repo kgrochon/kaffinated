@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { type SeasonGroup, castData, eraStyles, getEra, palette } from "../../data/table";
 import "./styles/table.css";
 
-export default function Table() {
+export default function Table({ hidePlacements = false }: { hidePlacements?: boolean }) {
     const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
     const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
 
@@ -168,16 +168,18 @@ export default function Table() {
                               className="player-photo"
                             />
                             {/* Placement badge */}
-                            <div
-                              className="placement-badge"
-                              style={{
-                                backgroundColor: placementStyle.bg,
-                                color: placementStyle.text,
-                                borderRadius: placementStyle.borderRadius
-                              }}
-                            >
-                              {player.placement}
-                            </div>
+                            {!hidePlacements && (
+                              <div
+                                className="placement-badge"
+                                style={{
+                                  backgroundColor: placementStyle.bg,
+                                  color: placementStyle.text,
+                                  borderRadius: placementStyle.borderRadius
+                                }}
+                              >
+                                {player.placement}
+                              </div>
+                            )}
                             {/* Times played badge */}
                             {timesPlayed > 1 && (
                               <div

@@ -4,7 +4,7 @@ import "./styles/placements.css";
 
 type SortOption = 'best' | 'average' | 'times' | 'tribe' | 'nameAsc' | 'nameDesc';
 
-export default function PlayerPlacements() {
+export default function PlayerPlacements({ hidePlacements = false }: { hidePlacements?: boolean }) {
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortOption>('best');
 
@@ -148,6 +148,18 @@ export default function PlayerPlacements() {
     if (placement <= 10) return palette.slate; // Top 10
     return palette.warmGray; // Everyone else
   };
+
+  if (hidePlacements) {
+    return (
+      <div className="placements-container">
+        <div className="placements-wrapper">
+          <p className="survivor-overview" style={{ textAlign: 'center', padding: '40px 20px', fontSize: '1.2em' }}>
+            Placement data has been hidden
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="placements-container" onClick={handleContainerClick}>

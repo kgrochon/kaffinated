@@ -10,6 +10,7 @@ type ChartView = "seasons" | "connections" | "placements" | "teams";
 
 export const Survivor = () => {
     const [activeChart, setActiveChart] = useState<ChartView>("seasons");
+    const [hidePlacements, setHidePlacements] = useState(true);
 
     return (
         <div className="notes">
@@ -26,6 +27,7 @@ export const Survivor = () => {
             </div>
 
             {/* Chart Navigation */}
+            <div className="survivor-nav-container">
             <div className="survivor-nav">
                 <button
                     className={`survivor-nav-button ${activeChart === "seasons" ? "active" : ""}`}
@@ -51,13 +53,23 @@ export const Survivor = () => {
                 >
                     Team Stats
                 </button>
+                </div>
+                <label style={{ margin: 'auto', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                    <input
+                        type="checkbox"
+                        checked={hidePlacements}
+                        onChange={(e) => setHidePlacements(e.target.checked)}
+                        style={{ cursor: 'pointer' }}
+                    />
+                    <span>No Spoilers!</span>
+                </label>
             </div>
 
             {/* Chart Content */}
             <div className="survivor-content">
-                {activeChart === "seasons" && <Table />}
+                {activeChart === "seasons" && <Table hidePlacements={hidePlacements} />}
                 {activeChart === "connections" && <PlayerConnections />}
-                {activeChart === "placements" && <PlayerPlacements />}
+                {activeChart === "placements" && <PlayerPlacements hidePlacements={hidePlacements} />}
                 {activeChart === "teams" && <TeamStats />}
             </div>
         </div>
