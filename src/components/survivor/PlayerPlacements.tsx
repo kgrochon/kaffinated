@@ -63,7 +63,7 @@ export default function PlayerPlacements({ hidePlacements = false }: { hidePlace
 
       case 'tribe':
         return sorted.sort((a, b) => {
-          const tribeCompare = a.tribe.localeCompare(b.tribe);
+          const tribeCompare = a.tribe[a.tribe.length - 1].localeCompare(b.tribe[b.tribe.length - 1]);
           if (tribeCompare !== 0) return tribeCompare;
           if (a.bestPlacement !== b.bestPlacement) {
             return a.bestPlacement - b.bestPlacement;
@@ -96,8 +96,8 @@ export default function PlayerPlacements({ hidePlacements = false }: { hidePlace
       let tribeRank = 1;
 
       return sortedPlayers.map((player, _index) => {
-        if (player.tribe !== currentTribe) {
-          currentTribe = player.tribe;
+        if (player.tribe[player.tribe.length - 1] !== currentTribe) {
+          currentTribe = player.tribe[player.tribe.length - 1];
           tribeRank = 1;
         } else {
           tribeRank++;
@@ -212,7 +212,7 @@ export default function PlayerPlacements({ hidePlacements = false }: { hidePlace
         {/* Players List */}
         <div className="placements-grid">
           {playersWithRanks.map((player, index) => {
-            const tribeColor = palette[player.tribe.toLowerCase() as keyof typeof palette] || palette.ink;
+            const tribeColor = palette[player.tribe[player.tribe.length - 1].toLowerCase() as keyof typeof palette] || palette.ink;
 
             return (
               <div

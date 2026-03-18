@@ -15,7 +15,7 @@ export default function Table({ hidePlacements = false }: { hidePlacements?: boo
           if (!map.has(s.season)) {
             map.set(s.season, { subtitle: s.subtitle, players: new Map() });
           }
-          map.get(s.season)!.players.set(player.name, { photo: player.photo, tribe: player.tribe, placement: s.placement });
+          map.get(s.season)!.players.set(player.name, { photo: player.photo, tribe: player.tribe[player.tribe.length - 1], placement: s.placement });
         });
       });
       return Array.from(map.entries())
@@ -132,7 +132,7 @@ export default function Table({ hidePlacements = false }: { hidePlacements?: boo
                       const timesPlayed = playerSeasons.get(player.name)?.length || 1;
                       const isThisPlayerActive = activePlayer === player.name;
                       const isPlayerDimmed = activePlayer !== null && !isThisPlayerActive && !isHighlighted;
-                      const tribeColor = palette[player.tribe.toLowerCase() as keyof typeof palette] || palette.ink;
+                      const tribeColor = palette[player.tribe[player.tribe.length - 1].toLowerCase() as keyof typeof palette] || palette.ink;
 
                       // Placement badge styling
                       const getPlacementStyle = (placement: number) => {

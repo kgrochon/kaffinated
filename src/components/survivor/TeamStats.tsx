@@ -24,8 +24,8 @@ export default function TeamStats() {
       );
 
       const enhanced: EnhancedPlayer = {
-        name: player.name,
-        tribe: player.tribe as "Cila" | "Vatu" | "Kalo",
+        name: player.name,  
+        tribe: player.tribe[player.tribe.length - 1] as "Cila" | "Vatu" | "Kalo",
         photo: player.photo,
         status: eliminationRecord
           ? eliminationRecord.type === "injury"

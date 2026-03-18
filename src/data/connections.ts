@@ -10,8 +10,6 @@ export const billyIdol = {
             receiver: "Aubry",
             episode: 2
 
-        }, third: {
-
         }
     }
 }
@@ -36,6 +34,11 @@ export const eliminated: Eliminated[] = [
     {
         name: "Savannah",
         episode: 2,
+        type: "tribalCouncil"
+    },
+    {
+        name: "Q",
+        episode: 3,
         type: "tribalCouncil"
     }
 ]

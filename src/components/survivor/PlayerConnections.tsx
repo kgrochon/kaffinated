@@ -76,7 +76,7 @@ export default function PlayerConnections() {
         {/* Players Grid */}
         <div className="connections-grid">
           {sortedPlayers.map((player) => {
-            const tribeColor = palette[player.tribe.toLowerCase() as keyof typeof palette] || palette.ink;
+            const tribeColor = palette[player.tribe[player.tribe.length - 1].toLowerCase() as keyof typeof palette] || palette.ink;
             const isActive = activePlayer === player.name;
             const isConnected = activeConnections?.has(player.name);
             const isDimmed = activePlayer !== null && !isActive && !isConnected;
