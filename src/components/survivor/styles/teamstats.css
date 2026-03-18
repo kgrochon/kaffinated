@@ -34,7 +34,8 @@
     font-size: 15px;
     color: var(--color-text-muted);
     max-width: 500px;
-    margin: 0 auto 24px;
+    margin: 24px auto 24px;
+
 }
 
 .team-stats-controls {

@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { type SeasonGroup, castData, eraStyles, getEra, palette } from "../../data/table";
 import "./styles/table.css";
 
-export default function Table({ hidePlacements = false }: { hidePlacements?: boolean }) {
+export default function Table() {
     const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
     const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
 
@@ -132,7 +132,7 @@ export default function Table({ hidePlacements = false }: { hidePlacements?: boo
                       const timesPlayed = playerSeasons.get(player.name)?.length || 1;
                       const isThisPlayerActive = activePlayer === player.name;
                       const isPlayerDimmed = activePlayer !== null && !isThisPlayerActive && !isHighlighted;
-                      const tribeColor = palette[player.tribe[player.tribe.length - 1].toLowerCase() as keyof typeof palette] || palette.ink;
+                      const tribeColor = palette[player.tribe.toLowerCase() as keyof typeof palette] || palette.ink;
 
                       // Placement badge styling
                       const getPlacementStyle = (placement: number) => {
@@ -168,18 +168,16 @@ export default function Table({ hidePlacements = false }: { hidePlacements?: boo
                               className="player-photo"
                             />
                             {/* Placement badge */}
-                            {!hidePlacements && (
-                              <div
-                                className="placement-badge"
-                                style={{
-                                  backgroundColor: placementStyle.bg,
-                                  color: placementStyle.text,
-                                  borderRadius: placementStyle.borderRadius
-                                }}
-                              >
-                                {player.placement}
-                              </div>
-                            )}
+                            <div
+                              className="placement-badge"
+                              style={{
+                                backgroundColor: placementStyle.bg,
+                                color: placementStyle.text,
+                                borderRadius: placementStyle.borderRadius
+                              }}
+                            >
+                              {player.placement}
+                            </div>
                             {/* Times played badge */}
                             {timesPlayed > 1 && (
                               <div

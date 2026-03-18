@@ -4,13 +4,14 @@ import Table from "../components/survivor/Table";
 import PlayerConnections from "../components/survivor/PlayerConnections";
 import PlayerPlacements from "../components/survivor/PlayerPlacements";
 import TeamStats from "../components/survivor/TeamStats";
+import TribeEvolution from "../components/survivor/TribeEvolution";
+import ParallelTribes from "../components/survivor/ParallelTribes";
 import "./styles/survivor.css";
 
-type ChartView = "seasons" | "connections" | "placements" | "teams";
+type ChartView = "seasons" | "connections" | "placements" | "teams" | "evolution" | "parallel";
 
 export const Survivor = () => {
     const [activeChart, setActiveChart] = useState<ChartView>("seasons");
-    const [hidePlacements, setHidePlacements] = useState(true);
 
     return (
         <div className="notes">
@@ -27,7 +28,6 @@ export const Survivor = () => {
             </div>
 
             {/* Chart Navigation */}
-            <div className="survivor-nav-container">
             <div className="survivor-nav">
                 <button
                     className={`survivor-nav-button ${activeChart === "seasons" ? "active" : ""}`}
@@ -53,24 +53,28 @@ export const Survivor = () => {
                 >
                     Team Stats
                 </button>
-                </div>
-                <label style={{ margin: 'auto', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                    <input
-                        type="checkbox"
-                        checked={hidePlacements}
-                        onChange={(e) => setHidePlacements(e.target.checked)}
-                        style={{ cursor: 'pointer' }}
-                    />
-                    <span>No Spoilers!</span>
-                </label>
+                <button
+                    className={`survivor-nav-button ${activeChart === "evolution" ? "active" : ""}`}
+                    onClick={() => setActiveChart("evolution")}
+                >
+                    Tribe Evolution
+                </button>
+                <button
+                    className={`survivor-nav-button ${activeChart === "parallel" ? "active" : ""}`}
+                    onClick={() => setActiveChart("parallel")}
+                >
+                    Parallel Tribes
+                </button>
             </div>
 
             {/* Chart Content */}
             <div className="survivor-content">
-                {activeChart === "seasons" && <Table hidePlacements={hidePlacements} />}
+                {activeChart === "seasons" && <Table />}
                 {activeChart === "connections" && <PlayerConnections />}
-                {activeChart === "placements" && <PlayerPlacements hidePlacements={hidePlacements} />}
+                {activeChart === "placements" && <PlayerPlacements />}
                 {activeChart === "teams" && <TeamStats />}
+                {activeChart === "evolution" && <TribeEvolution />}
+                {activeChart === "parallel" && <ParallelTribes />}
             </div>
         </div>
     );
