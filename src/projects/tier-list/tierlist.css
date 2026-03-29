@@ -1,0 +1,108 @@
+/* Tier List Header */
+.tierlist-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.tierlist-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+  letter-spacing: 0.1em;
+}
+
+.tierlist-subtitle {
+  font-size: 0.875rem;
+  color: var(--color-text);
+  opacity: 0.7;
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+/* Navigation Tabs */
+.tierlist-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.tierlist-nav-button {
+  padding: 12px 24px;
+  background: transparent;
+  border: 2px solid var(--color-text);
+  color: var(--color-text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tierlist-nav-button:hover {
+  background: var(--color-text);
+  color: var(--color-bg);
+}
+
+.tierlist-nav-button.active {
+  background: var(--color-purple);
+  color: white;
+  border-color: var(--color-purple);
+}
+
+/* Content Area */
+.tierlist-content {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.tierlist-view {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 400px;
+}
+
+.tierlist-view p {
+  text-align: center;
+  color: var(--color-text);
+  font-size: 1.125rem;
+  opacity: 0.6;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tierlist-title {
+    font-size: 1.5rem;
+  }
+
+  .tierlist-nav {
+    gap: 0.5rem;
+  }
+
+  .tierlist-nav-button {
+    padding: 10px 16px;
+    font-size: 0.75rem;
+  }
+
+  .tierlist-view {
+    padding: 1rem;
+  }
+}

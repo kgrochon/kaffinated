@@ -28,9 +28,6 @@ export const Home = () => {
                         <Link to="/survivor" className="button">
                             Survivor
                         </Link>
-                        {/* <Link to="/up-trip" className="button">
-                            U.P Trip
-                        </Link> */}
                         {/* <Link to="/tier-list" className="button">
                             Tier List
                         </Link> */}

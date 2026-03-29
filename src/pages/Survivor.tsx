@@ -1,11 +1,8 @@
 import { useState } from "react";
 import { Navigation } from "../components/navigation/Navigation";
-import Table from "../components/survivor/Table";
-import PlayerConnections from "../components/survivor/PlayerConnections";
-import PlayerPlacements from "../components/survivor/PlayerPlacements";
-import TeamStats from "../components/survivor/TeamStats";
-import TribeEvolution from "../components/survivor/TribeEvolution";
-import ParallelTribes from "../components/survivor/ParallelTribes";
+import Table from "../projects/survivor/Table";
+import PlayerConnections from "../projects/survivor/PlayerConnections";
+import TribeEvolution from "../projects/survivor/TribeEvolution";
 import "./styles/survivor.css";
 
 type ChartView = "seasons" | "connections" | "placements" | "teams" | "evolution" | "parallel";
@@ -42,39 +39,25 @@ export const Survivor = () => {
                     Connections
                 </button>
                 <button
-                    className={`survivor-nav-button ${activeChart === "placements" ? "active" : ""}`}
-                    onClick={() => setActiveChart("placements")}
-                >
-                    Placements
-                </button>
-                <button
-                    className={`survivor-nav-button ${activeChart === "teams" ? "active" : ""}`}
-                    onClick={() => setActiveChart("teams")}
-                >
-                    Team Stats
-                </button>
-                <button
                     className={`survivor-nav-button ${activeChart === "evolution" ? "active" : ""}`}
                     onClick={() => setActiveChart("evolution")}
                 >
                     Tribe Evolution
                 </button>
-                <button
+                {/* <button
                     className={`survivor-nav-button ${activeChart === "parallel" ? "active" : ""}`}
                     onClick={() => setActiveChart("parallel")}
                 >
                     Parallel Tribes
-                </button>
+                </button> */}
             </div>
 
             {/* Chart Content */}
             <div className="survivor-content">
                 {activeChart === "seasons" && <Table />}
                 {activeChart === "connections" && <PlayerConnections />}
-                {activeChart === "placements" && <PlayerPlacements />}
-                {activeChart === "teams" && <TeamStats />}
                 {activeChart === "evolution" && <TribeEvolution />}
-                {activeChart === "parallel" && <ParallelTribes />}
+                {/* {activeChart === "parallel" && <ParallelTribes />} */}
             </div>
         </div>
     );
