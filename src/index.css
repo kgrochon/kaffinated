@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Apfel Grotezk Font Family */
 @font-face {
     font-family: "Apfel Grotezk";
@@ -91,6 +95,8 @@
     --color-border: #2d2d2d; */
 
     /* Color Palette */
+    --color-logo: #d65c1f;
+    
     --color-green: #73b9a8;
     --color-purple: #a186af;
     --color-dark-purple: #644971;
@@ -186,7 +192,6 @@ body {
 
 #root {
     width: 100%;
-    max-width: 1280px;
     margin: 0 auto;
     text-align: center;
 }

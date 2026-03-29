@@ -12,6 +12,7 @@ export const Navigation = () => {
                 </Link>
             </div>
             <div className="nav-links">
+                {/* <Link to="/about">About</Link> */}
                 {/* <Link to="/notes">Notes</Link> */}
                 {/* <Link to="/life">Life</Link> */}
             </div>
