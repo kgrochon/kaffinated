@@ -134,16 +134,6 @@ export default function Table() {
                       const isPlayerDimmed = activePlayer !== null && !isThisPlayerActive && !isHighlighted;
                       const tribeColor = palette[player.tribe.toLowerCase() as keyof typeof palette] || palette.ink;
 
-                      // Placement badge styling
-                      const getPlacementStyle = (placement: number) => {
-                        if (placement === 1) return { bg: '#FFD700', text: '#1A1A18', borderRadius: 'var(--radius-lg)' }; // Gold
-                        if (placement === 2) return { bg: '#C0C0C0', text: '#1A1A18', borderRadius: 'var(--radius-lg)' }; // Silver
-                        if (placement === 3) return { bg: '#CD7F32', text: '#FFFFFF', borderRadius: 'var(--radius-lg)' }; // Bronze
-                        return { bg: "#ffffff", text: '#000000', borderRadius: 'var(--radius-sm)' }; // Tribe color for others
-                      };
-
-                      const placementStyle = getPlacementStyle(player.placement);
-
                       return (
                         <div
                           key={player.name}
