@@ -63,7 +63,6 @@ export default function TribeEvolution() {
 
         {/* Player streams - shows individual journeys */}
         <div className="player-streams-section">
-          <h3 className="streams-title">Individual Player Journeys</h3>
           <div className="player-streams">
             {playerJourneys.map((player) => {
               return (

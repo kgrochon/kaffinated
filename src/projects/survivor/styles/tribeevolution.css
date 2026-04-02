@@ -147,13 +147,6 @@
   margin-left: auto;
 }
 
-/* Player Streams Section */
-.player-streams-section {
-  margin-top: 60px;
-  padding-top: 40px;
-  border-top: 3px solid var(--color-text);
-}
-
 .streams-title {
   text-align: center;
   font-size: 1.5em;
@@ -193,8 +186,8 @@
 
 .stream-path {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   height: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
 }
 
 .stream-segment {

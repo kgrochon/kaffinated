@@ -42,7 +42,7 @@ export const Survivor = () => {
                     className={`survivor-nav-button ${activeChart === "evolution" ? "active" : ""}`}
                     onClick={() => setActiveChart("evolution")}
                 >
-                    Tribe Evolution
+                    Individual Journeys
                 </button>
                 {/* <button
                     className={`survivor-nav-button ${activeChart === "parallel" ? "active" : ""}`}

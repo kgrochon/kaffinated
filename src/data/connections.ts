@@ -40,6 +40,36 @@ export const eliminated: Eliminated[] = [
         name: "Q",
         episode: 3,
         type: "tribalCouncil"
+    },
+    {
+        name: "Mike",
+        episode: 4,
+        type: "tribalCouncil"
+    },
+    {
+        name: "Charlie",
+        episode: 5,
+        type: "tribalCouncil"
+    },
+    {
+        name: "Angelina",
+        episode: 5,
+        type: "tribalCouncil"
+    },
+    {
+        name: "Kamilla",
+        episode: 6,
+        type: "tribalCouncil"
+    },
+    {
+        name: "Genevieve",
+        episode: 6,
+        type: "tribalCouncil"
+    },
+    {
+        name: "Colby",
+        episode: 6,
+        type: "tribalCouncil"
     }
 ]
 
