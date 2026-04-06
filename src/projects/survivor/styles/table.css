@@ -265,6 +265,37 @@
     }
 }
 
+/* Eliminated Player Styles */
+.player-card.eliminated {
+    opacity: 0.6;
+    background-color: #f5f5f5 !important;
+    border-style: dashed;
+}
+
+.player-card.eliminated .player-photo {
+    filter: grayscale(100%);
+}
+
+.elimination-badge {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    background-color: #ad373b;
+    color: white;
+    font-size: 7px;
+    font-weight: 700;
+    padding: 2px 4px;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+    z-index: 1;
+    border: 1px solid var(--color-text);
+}
+
+.player-card.eliminated.injury .elimination-badge {
+    background-color: #fcdc4d;
+    color: #1a1a18;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
     .survivor-table-container {

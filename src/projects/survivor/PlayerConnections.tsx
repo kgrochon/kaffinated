@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { castData, palette } from "../../data/table";
+import { eliminated } from "../../data/connections";
 import "./styles/connections.css";
 
 export default function PlayerConnections() {
@@ -83,10 +84,17 @@ export default function PlayerConnections() {
             const connectionCount = connections.get(player.name)?.size || 0;
             const sharedSeasons = activeConnections?.get(player.name) || [];
 
+            // Check if player is eliminated
+            const eliminationRecord = eliminated.find(el =>
+              player.name.toLowerCase().includes(el.name.toLowerCase())
+            );
+            const isEliminated = !!eliminationRecord;
+            const eliminationType = eliminationRecord?.type;
+
             return (
               <div
                 key={player.name}
-                className={`connection-card ${isDimmed ? "dimmed" : ""} ${isActive ? "active" : ""} ${isConnected ? "connected" : ""}`}
+                className={`connection-card ${isDimmed ? "dimmed" : ""} ${isActive ? "active" : ""} ${isConnected ? "connected" : ""} ${isEliminated ? "eliminated" : ""} ${eliminationType === "injury" ? "injury" : ""}`}
                 onClick={(e) => {
                   e.stopPropagation();
                   handlePlayerClick(player.name);
@@ -104,6 +112,12 @@ export default function PlayerConnections() {
                     alt={player.name}
                     className="connection-photo"
                   />
+                  {/* Elimination badge */}
+                  {isEliminated && (
+                    <div className="elimination-badge-conn">
+                      {eliminationType === "injury" ? "INJURED" : "ELIMINATED"}
+                    </div>
+                  )}
                   {isConnected && sharedSeasons.length > 0 && (
                     <div
                       className="shared-seasons-badge"

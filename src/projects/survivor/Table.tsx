@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { type SeasonGroup, castData, eraStyles, getEra, palette } from "../../data/table";
+import { eliminated } from "../../data/connections";
 import "./styles/table.css";
 
 export default function Table() {
@@ -134,10 +135,17 @@ export default function Table() {
                       const isPlayerDimmed = activePlayer !== null && !isThisPlayerActive && !isHighlighted;
                       const tribeColor = palette[player.tribe.toLowerCase() as keyof typeof palette] || palette.ink;
 
+                      // Check if player is eliminated
+                      const eliminationRecord = eliminated.find(el =>
+                        player.name.toLowerCase().includes(el.name.toLowerCase())
+                      );
+                      const isEliminated = !!eliminationRecord;
+                      const eliminationType = eliminationRecord?.type;
+
                       return (
                         <div
                           key={player.name}
-                          className={`player-card ${isPlayerDimmed ? "dimmed" : ""}`}
+                          className={`player-card ${isPlayerDimmed ? "dimmed" : ""} ${isEliminated ? "eliminated" : ""} ${eliminationType === "injury" ? "injury" : ""}`}
                           onMouseEnter={() => !selectedPlayer && setHoveredPlayer(player.name)}
                           onMouseLeave={() => !selectedPlayer && setHoveredPlayer(null)}
                           onClick={(e) => {
@@ -157,6 +165,12 @@ export default function Table() {
                               alt={player.name}
                               className="player-photo"
                             />
+                            {/* Elimination badge */}
+                            {isEliminated && (
+                              <div className="elimination-badge">
+                                {eliminationType === "injury" ? "INJURED" : "ELIMINATED"}
+                              </div>
+                            )}
                             {/* Placement badge */}
                             {/* <div
                               className="placement-badge"

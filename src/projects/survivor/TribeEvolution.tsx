@@ -75,7 +75,7 @@ export default function TribeEvolution() {
                     />
                   </div>
 
-                  <div className="stream-path">
+                  <div className="stream-path" style={{ gridTemplateColumns: `repeat(${player.tribes.length}, 1fr)` }}>
                     {player.tribes.map((tribe, index) => {
                       const tribeColor =
                         tribeColors.find((t) => t.name === tribe)?.color ||

@@ -212,6 +212,42 @@
     font-weight: 400;
 }
 
+/* Eliminated Player Styles */
+.connection-card.eliminated {
+    background-color: #f8f8f8 !important;
+    position: relative;
+}
+
+.connection-card.eliminated .connection-photo {
+    filter: grayscale(80%);
+    opacity: 0.8;
+}
+
+.elimination-badge-conn {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background-color: #ad373b;
+    color: white;
+    font-size: 7px;
+    font-weight: 700;
+    padding: 2px 4px;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+    z-index: 1;
+    border: 1px solid var(--color-text);
+}
+
+.connection-card.eliminated.injury .elimination-badge-conn {
+    background-color: #fcdc4d;
+    color: #1a1a18;
+}
+
+.connection-card.eliminated .connection-count {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
 /* Animations */
 @keyframes fadeInUp {
     from {
