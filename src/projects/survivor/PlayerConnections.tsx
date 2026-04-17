@@ -1,11 +1,47 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { castData, palette } from "../../data/table";
 import { eliminated } from "../../data/connections";
 import "./styles/connections.css";
 
+function isPlayerEliminatedOrInjured(playerName: string) {
+  return !!eliminated.find((el) =>
+    playerName.toLowerCase().includes(el.name.toLowerCase())
+  );
+}
+
+function parseColorToRgb(color: string): [number, number, number] | null {
+  const c = color.trim();
+  if (c.startsWith("#")) {
+    const h = c.slice(1);
+    const full =
+      h.length === 3 ? h.split("").map((ch) => ch + ch).join("") : h;
+    if (full.length !== 6) return null;
+    return [
+      parseInt(full.slice(0, 2), 16),
+      parseInt(full.slice(2, 4), 16),
+      parseInt(full.slice(4, 6), 16),
+    ];
+  }
+  const space = c.match(/rgba?\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)/);
+  if (space) return [Number(space[1]), Number(space[2]), Number(space[3])];
+  const comma = c.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+  if (comma) return [Number(comma[1]), Number(comma[2]), Number(comma[3])];
+  return null;
+}
+
+/** Dark text on light fills, light text on dark fills (for tribe highlight). */
+function readableOnBackground(bg: string): "#ffffff" | "#1A1A18" {
+  const rgb = parseColorToRgb(bg);
+  if (!rgb) return "#1A1A18";
+  const [r, g, b] = rgb;
+  const y = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+  return y > 0.55 ? "#1A1A18" : "#ffffff";
+}
+
 export default function PlayerConnections() {
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
+  const [showActiveOnly, setShowActiveOnly] = useState(false);
 
   // Calculate connections between players (shared seasons)
   const connections = useMemo(() => {
@@ -61,6 +97,26 @@ export default function PlayerConnections() {
     });
   }, [connections]);
 
+  const displayPlayers = useMemo(() => {
+    if (!showActiveOnly) return sortedPlayers;
+    return sortedPlayers.filter((p) => !isPlayerEliminatedOrInjured(p.name));
+  }, [sortedPlayers, showActiveOnly]);
+
+  useEffect(() => {
+    if (
+      selectedPlayer &&
+      !displayPlayers.some((p) => p.name === selectedPlayer)
+    ) {
+      setSelectedPlayer(null);
+    }
+    if (
+      hoveredPlayer &&
+      !displayPlayers.some((p) => p.name === hoveredPlayer)
+    ) {
+      setHoveredPlayer(null);
+    }
+  }, [displayPlayers, selectedPlayer, hoveredPlayer]);
+
   return (
     <div className="connections-container" onClick={handleContainerClick}>
       <div className="connections-wrapper">
@@ -74,9 +130,22 @@ export default function PlayerConnections() {
           </p>
         </div>
 
+        <div className="connections-toolbar">
+          <button
+            type="button"
+            className="connections-active-toggle survivor-nav-button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowActiveOnly((v) => !v);
+            }}
+          >
+            {showActiveOnly ? "Hide active" : "Show active"}
+          </button>
+        </div>
+
         {/* Players Grid */}
         <div className="connections-grid">
-          {sortedPlayers.map((player) => {
+          {displayPlayers.map((player) => {
             const tribeColor = palette[player.tribe[player.tribe.length - 1].toLowerCase() as keyof typeof palette] || palette.ink;
             const isActive = activePlayer === player.name;
             const isConnected = activeConnections?.has(player.name);
@@ -84,12 +153,20 @@ export default function PlayerConnections() {
             const connectionCount = connections.get(player.name)?.size || 0;
             const sharedSeasons = activeConnections?.get(player.name) || [];
 
-            // Check if player is eliminated
-            const eliminationRecord = eliminated.find(el =>
+            const eliminationRecord = eliminated.find((el) =>
               player.name.toLowerCase().includes(el.name.toLowerCase())
             );
             const isEliminated = !!eliminationRecord;
             const eliminationType = eliminationRecord?.type;
+
+            const highlightNameColor = isEliminated
+              ? "var(--color-text)"
+              : readableOnBackground(tribeColor);
+            const highlightCountColor = isEliminated
+              ? "var(--color-text-muted)"
+              : readableOnBackground(tribeColor) === "#ffffff"
+                ? "rgba(255, 255, 255, 0.88)"
+                : "var(--color-text-muted)";
 
             return (
               <div
@@ -131,15 +208,19 @@ export default function PlayerConnections() {
                   <div
                     className="connection-name"
                     style={{
-                      color: isActive ? '#ffffff' : 'var(--color-text)',
-                      fontWeight: isActive || isConnected ? 600 : 400
+                      color: isActive ? highlightNameColor : "var(--color-text)",
+                      fontWeight: isActive || isConnected ? 600 : 400,
                     }}
                   >
                     {player.name.split(' ')[0]}
                   </div>
                   <div
                     className="connection-count"
-                    style={{ color: isActive ? '#ffffff' : 'var(--color-text-muted)' }}
+                    style={{
+                      color: isActive
+                        ? highlightCountColor
+                        : "var(--color-text-muted)",
+                    }}
                   >
                     {connectionCount} {connectionCount === 1 ? 'connection' : 'connections'}
                   </div>
