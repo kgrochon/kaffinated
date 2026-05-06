@@ -30,7 +30,7 @@ export default function TribeBubbles() {
   const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
   const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
 
-  const weeks = ["Week 1", "Week 2", "Week 3"];
+  const weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10"];
 
   // SVG dimensions
   const weekWidth = 400;

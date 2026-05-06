@@ -3,6 +3,52 @@ import { type SeasonGroup, castData, eraStyles, getEra, palette } from "../../da
 import { eliminated } from "../../data/connections";
 import "./styles/table.css";
 
+const normalizeName = (name: string) =>
+  name.toLowerCase().replace(/[^a-z\s]/g, "").trim();
+
+const firstName = (name: string) => normalizeName(name).split(/\s+/)[0] || "";
+
+function levenshteinDistance(a: string, b: string) {
+  const dp = Array.from({ length: a.length + 1 }, () =>
+    Array(b.length + 1).fill(0)
+  );
+
+  for (let i = 0; i <= a.length; i += 1) dp[i][0] = i;
+  for (let j = 0; j <= b.length; j += 1) dp[0][j] = j;
+
+  for (let i = 1; i <= a.length; i += 1) {
+    for (let j = 1; j <= b.length; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(
+        dp[i - 1][j] + 1,
+        dp[i][j - 1] + 1,
+        dp[i - 1][j - 1] + cost
+      );
+    }
+  }
+
+  return dp[a.length][b.length];
+}
+
+function matchesEliminationRecord(playerName: string, eliminatedName: string) {
+  const playerNormalized = normalizeName(playerName);
+  const eliminatedNormalized = normalizeName(eliminatedName);
+
+  if (
+    playerNormalized.includes(eliminatedNormalized) ||
+    eliminatedNormalized.includes(playerNormalized)
+  ) {
+    return true;
+  }
+
+  const playerFirst = firstName(playerName);
+  const eliminatedFirst = firstName(eliminatedName);
+  if (!playerFirst || !eliminatedFirst) return false;
+  if (playerFirst === eliminatedFirst) return true;
+
+  return levenshteinDistance(playerFirst, eliminatedFirst) <= 1;
+}
+
 export default function Table() {
     const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
     const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
@@ -136,8 +182,8 @@ export default function Table() {
                       const tribeColor = palette[player.tribe.toLowerCase() as keyof typeof palette] || palette.ink;
 
                       // Check if player is eliminated
-                      const eliminationRecord = eliminated.find(el =>
-                        player.name.toLowerCase().includes(el.name.toLowerCase())
+                      const eliminationRecord = eliminated.find((el) =>
+                        matchesEliminationRecord(player.name, el.name)
                       );
                       const isEliminated = !!eliminationRecord;
                       const eliminationType = eliminationRecord?.type;

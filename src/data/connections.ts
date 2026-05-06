@@ -10,6 +10,11 @@ export const billyIdol = {
             receiver: "Aubry",
             episode: 2
 
+        }, 
+        third: {
+            giver: "Genevieve",
+            receiver: "Rizzo",
+            episode: 3
         }
     }
 }
@@ -85,7 +90,18 @@ export const eliminated: Eliminated[] = [
         name: "Chrissy",
         episode: 8,
         type: "tribalCouncil"
+    },
+    {
+        name: "Christian",
+        episode: 9,
+        type: "tribalCouncil"
+    },
+    {
+        name: "Stephanie",
+        episode: 10,
+        type: "tribalCouncil"
     }
+
 ]
 
 interface Alliance {

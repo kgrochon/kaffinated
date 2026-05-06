@@ -30,8 +30,7 @@
     font-size: 15px;
     color: var(--color-text-muted);
     max-width: 500px;
-    margin: 0 auto;
-    margin-bottom: 10px;
+    margin: 20px auto;
 }
 
 .survivor-subtext {

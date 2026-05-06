@@ -11,14 +11,64 @@ interface PlayerJourney {
   eliminationType?: "tribalCouncil" | "injury";
 }
 
+const normalizeName = (name: string) =>
+  name.toLowerCase().replace(/[^a-z\s]/g, "").trim();
+
+const firstName = (name: string) => normalizeName(name).split(/\s+/)[0] || "";
+
+function levenshteinDistance(a: string, b: string) {
+  const dp = Array.from({ length: a.length + 1 }, () =>
+    Array(b.length + 1).fill(0)
+  );
+
+  for (let i = 0; i <= a.length; i += 1) dp[i][0] = i;
+  for (let j = 0; j <= b.length; j += 1) dp[0][j] = j;
+
+  for (let i = 1; i <= a.length; i += 1) {
+    for (let j = 1; j <= b.length; j += 1) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      dp[i][j] = Math.min(
+        dp[i - 1][j] + 1,
+        dp[i][j - 1] + 1,
+        dp[i - 1][j - 1] + cost
+      );
+    }
+  }
+
+  return dp[a.length][b.length];
+}
+
+function matchesEliminationRecord(playerName: string, eliminatedName: string) {
+  const playerNormalized = normalizeName(playerName);
+  const eliminatedNormalized = normalizeName(eliminatedName);
+
+  if (
+    playerNormalized.includes(eliminatedNormalized) ||
+    eliminatedNormalized.includes(playerNormalized)
+  ) {
+    return true;
+  }
+
+  const playerFirst = firstName(playerName);
+  const eliminatedFirst = firstName(eliminatedName);
+
+  // Handles small first-name variants like "Stephenie" vs "Stephanie",
+  // but avoids broad prefix matches like "Christian" vs "Chrissy".
+  if (!playerFirst || !eliminatedFirst) return false;
+  if (playerFirst === eliminatedFirst) return true;
+
+  const firstNameDistance = levenshteinDistance(playerFirst, eliminatedFirst);
+  return firstNameDistance <= 1;
+}
+
 export default function TribeEvolution() {
-  const weeks = ["Week 1", "Week 2", "Week 3"];
+  const weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10"];
 
   // Transform cast data into player journeys
   const playerJourneys: PlayerJourney[] = useMemo(() => {
     const journeys = castData.map((player) => {
       const eliminationRecord = eliminated.find((el) =>
-        player.name.toLowerCase().includes(el.name.toLowerCase())
+        matchesEliminationRecord(player.name, el.name)
       );
 
       return {
