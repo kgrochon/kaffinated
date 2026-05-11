@@ -100,6 +100,10 @@ export const eliminated: Eliminated[] = [
         name: "Stephanie",
         episode: 10,
         type: "tribalCouncil"
+    }, {
+        name: "Emily",
+        episode: 11,
+        type: "tribalCouncil"
     }
 
 ]
