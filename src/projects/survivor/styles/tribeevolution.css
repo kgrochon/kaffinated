@@ -11,17 +11,21 @@
 
 .evolution-description {
   text-align: center;
-  font-size: 1.1em;
+  font-size: 1.05em;
   color: var(--color-text);
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.45;
 }
 
 /* Legend */
 .evolution-legend {
   display: flex;
   justify-content: center;
-  gap: 30px;
-  margin-bottom: 40px;
+  gap: 24px;
+  margin-bottom: 28px;
   flex-wrap: wrap;
 }
 
@@ -29,203 +33,90 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  font-size: 0.95em;
+  font-weight: 500;
+  color: var(--color-text);
 }
 
 .legend-color-box {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 4px;
   border: 2px solid var(--color-text);
+  flex-shrink: 0;
 }
 
-/* Timeline Layout */
-.evolution-timeline {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-bottom: 60px;
+/* Horizontal elimination strip */
+.elimination-strip {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 14px;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 12px 8px 20px;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
 }
 
-.week-column {
+.elimination-card {
+  flex: 0 0 auto;
+  width: min(168px, 42vw);
+  min-height: 220px;
+  border: 3px solid var(--color-text);
+  border-radius: 10px;
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-}
-
-.week-header {
+  align-items: center;
   text-align: center;
-  padding: 10px;
-  background: var(--color-bg-alt);
+  padding: 14px 12px 16px;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.elimination-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.elimination-card-photo-wrap {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
   border: 2px solid var(--color-text);
-  border-radius: 8px;
-}
-
-.week-title {
-  margin: 0;
-  font-size: 1.3em;
-  font-weight: 700;
-  color: var(--color-text);
-}
-
-/* Tribes within each week */
-.tribes-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.tribe-section {
-  border: 2px solid var(--color-text);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
-  background: var(--color-cream);
+  background: rgba(255, 255, 255, 0.35);
 }
 
-.tribe-header-small {
-  padding: 8px 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: white;
-  font-weight: 700;
-}
-
-.tribe-name-small {
-  font-size: 1em;
-}
-
-.tribe-count {
-  background: rgba(255, 255, 255, 0.3);
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: 0.9em;
-}
-
-/* Player chips */
-.player-list {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-height: 50px;
-}
-
-.player-chip {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  background: white;
-  border: 2px solid;
-  border-radius: 20px;
-  transition: transform 0.2s, box-shadow 0.2s;
-  position: relative;
-}
-
-.player-chip.eliminated {
-  opacity: 0.7;
-  background: #f8f8f8;
-}
-
-.player-chip-photo {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+.elimination-card-photo {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border: 1.5px solid var(--color-text);
+  display: block;
 }
 
-.player-chip-name {
-  font-size: 0.9em;
-  font-weight: 600;
-  color: var(--color-text);
-  flex: 1;
-}
-
-.eliminated-badge {
-  font-size: 1em;
-  margin-left: auto;
-}
-
-.streams-title {
-  text-align: center;
-  font-size: 1.5em;
-  margin-bottom: 30px;
-  color: var(--color-text);
-}
-
-.player-streams {
-  display: flex;
-  flex-direction: column;
-}
-
-.player-stream {
-  display: grid;
-  grid-template-columns: 40px 1fr;
-}
-
-.stream-player-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.stream-photo {
-  width: 40px;
-  height: 40px;
-  /* border-radius: 50%; */
-  object-fit: cover;
-  /* border: 2px solid var(--color-text); */
-}
-
-.stream-name {
-  font-weight: 600;
-  color: var(--color-text);
-  font-size: 1em;
-}
-
-.stream-path {
-  display: grid;
-  height: 40px;
-  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-}
-
-.stream-segment {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  transition: all 0.3s;
-}
-
-.stream-segment.eliminated-segment {
-  border-style: dashed;
-}
-
-.segment-eliminated-marker {
-  font-size: 1.2em;
-}
-
-.segment-ongoing {
-  font-size: 1.2em;
-  color: var(--color-text);
+.elimination-card-name {
+  margin-top: 12px;
+  font-size: 1rem;
   font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .evolution-timeline {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
+.elimination-card-episode {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
 
-  .week-column {
-    gap: 10px;
-  }
-
-  .player-stream {
-    grid-template-columns: 50px 1fr;
-  }
+.elimination-card-sub {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 @media (max-width: 768px) {
@@ -233,24 +124,14 @@
     padding: 15px;
   }
 
-  .evolution-legend {
-    gap: 15px;
+  .elimination-card {
+    width: 140px;
+    min-height: 200px;
+    padding: 12px 10px 14px;
   }
 
-  .player-stream {
-    grid-template-columns: 40px 1fr;
-  }
-
-  .stream-photo {
-    width: 32px;
-    height: 32px;
-  }
-
-  .stream-name {
-    font-size: 0.9em;
-  }
-
-  .stream-path {
-    height: 32px;
+  .elimination-card-photo-wrap {
+    width: 88px;
+    height: 88px;
   }
 }

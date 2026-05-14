@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { castData, palette, tribeColors } from "../../data/table";
-import { eliminated } from "../../data/connections";
+import { findEliminationRecord } from "./eliminationMatch";
 import "./styles/tribeevolution.css";
 
-interface PlayerJourney {
+interface JourneyCard {
   name: string;
   photo: string;
   tribes: string[];
@@ -11,66 +11,53 @@ interface PlayerJourney {
   eliminationType?: "tribalCouncil" | "injury";
 }
 
-const normalizeName = (name: string) =>
-  name.toLowerCase().replace(/[^a-z\s]/g, "").trim();
-
-const firstName = (name: string) => normalizeName(name).split(/\s+/)[0] || "";
-
-function levenshteinDistance(a: string, b: string) {
-  const dp = Array.from({ length: a.length + 1 }, () =>
-    Array(b.length + 1).fill(0)
-  );
-
-  for (let i = 0; i <= a.length; i += 1) dp[i][0] = i;
-  for (let j = 0; j <= b.length; j += 1) dp[0][j] = j;
-
-  for (let i = 1; i <= a.length; i += 1) {
-    for (let j = 1; j <= b.length; j += 1) {
-      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-      dp[i][j] = Math.min(
-        dp[i - 1][j] + 1,
-        dp[i][j - 1] + 1,
-        dp[i - 1][j - 1] + cost
-      );
-    }
+function parseColorToRgb(color: string): [number, number, number] | null {
+  const c = color.trim();
+  if (c.startsWith("#")) {
+    const h = c.slice(1);
+    const full =
+      h.length === 3 ? h.split("").map((ch) => ch + ch).join("") : h;
+    if (full.length !== 6) return null;
+    return [
+      parseInt(full.slice(0, 2), 16),
+      parseInt(full.slice(2, 4), 16),
+      parseInt(full.slice(4, 6), 16),
+    ];
   }
-
-  return dp[a.length][b.length];
+  const space = c.match(/rgba?\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)/);
+  if (space) return [Number(space[1]), Number(space[2]), Number(space[3])];
+  const comma = c.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/);
+  if (comma) return [Number(comma[1]), Number(comma[2]), Number(comma[3])];
+  return null;
 }
 
-function matchesEliminationRecord(playerName: string, eliminatedName: string) {
-  const playerNormalized = normalizeName(playerName);
-  const eliminatedNormalized = normalizeName(eliminatedName);
+function readableOnBackground(bg: string): "#ffffff" | "#1A1A18" {
+  const rgb = parseColorToRgb(bg);
+  if (!rgb) return "#1A1A18";
+  const [r, g, b] = rgb;
+  const y = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+  return y > 0.55 ? "#1A1A18" : "#ffffff";
+}
 
-  if (
-    playerNormalized.includes(eliminatedNormalized) ||
-    eliminatedNormalized.includes(playerNormalized)
-  ) {
-    return true;
-  }
+function colorForTribeName(tribeName: string) {
+  const fromList = tribeColors.find((t) => t.name === tribeName)?.color;
+  if (fromList) return fromList;
+  return (
+    palette[tribeName.toLowerCase() as keyof typeof palette] || palette.warmGray
+  );
+}
 
-  const playerFirst = firstName(playerName);
-  const eliminatedFirst = firstName(eliminatedName);
-
-  // Handles small first-name variants like "Stephenie" vs "Stephanie",
-  // but avoids broad prefix matches like "Christian" vs "Chrissy".
-  if (!playerFirst || !eliminatedFirst) return false;
-  if (playerFirst === eliminatedFirst) return true;
-
-  const firstNameDistance = levenshteinDistance(playerFirst, eliminatedFirst);
-  return firstNameDistance <= 1;
+function tribeAtEpisode(tribes: string[], episode: number | undefined) {
+  if (!episode || episode < 1) return tribes[tribes.length - 1];
+  const idx = episode - 1;
+  if (idx >= 0 && idx < tribes.length) return tribes[idx];
+  return tribes[tribes.length - 1];
 }
 
 export default function TribeEvolution() {
-  const weeks = ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10"];
-
-  // Transform cast data into player journeys
-  const playerJourneys: PlayerJourney[] = useMemo(() => {
+  const orderedPlayers: JourneyCard[] = useMemo(() => {
     const journeys = castData.map((player) => {
-      const eliminationRecord = eliminated.find((el) =>
-        matchesEliminationRecord(player.name, el.name)
-      );
-
+      const eliminationRecord = findEliminationRecord(player.name);
       return {
         name: player.name,
         photo: player.photo,
@@ -80,14 +67,16 @@ export default function TribeEvolution() {
       };
     });
 
-    // Sort by elimination week (eliminated players first, sorted by week, then non-eliminated)
     return journeys.sort((a, b) => {
       if (a.eliminated && b.eliminated) {
-        return a.eliminated - b.eliminated;
+        if (a.eliminated !== b.eliminated) {
+          return a.eliminated - b.eliminated;
+        }
+        return a.name.localeCompare(b.name);
       }
       if (a.eliminated) return -1;
       if (b.eliminated) return 1;
-      return 0;
+      return a.name.localeCompare(b.name);
     });
   }, []);
 
@@ -95,10 +84,11 @@ export default function TribeEvolution() {
     <div className="tribe-evolution-container">
       <div className="tribe-evolution-wrapper">
         <p className="evolution-description">
-          Track how players move between tribes across the weeks
+          Elimination order for Season 50. Scroll horizontally to see each
+          player; card color is the tribe they were on when voted out (or
+          their latest tribe if still in the game).
         </p>
 
-        {/* Legend */}
         <div className="evolution-legend">
           {tribeColors.map((tribe) => (
             <div key={tribe.name} className="legend-item">
@@ -111,62 +101,60 @@ export default function TribeEvolution() {
           ))}
         </div>
 
-        {/* Player streams - shows individual journeys */}
-        <div className="player-streams-section">
-          <div className="player-streams">
-            {playerJourneys.map((player) => {
-              return (
-                <div key={player.name} className="player-stream">
-                  <div className="stream-player-info">
-                    <img
-                      src={player.photo}
-                      alt={player.name}
-                      className="stream-photo"
-                    />
-                  </div>
+        <div className="elimination-strip" role="list">
+          {orderedPlayers.map((player) => {
+            const tribeName = tribeAtEpisode(player.tribes, player.eliminated);
+            const cardBg = colorForTribeName(tribeName);
+            const textColor = readableOnBackground(cardBg);
+            const mutedColor =
+              textColor === "#ffffff"
+                ? "rgba(255,255,255,0.85)"
+                : "var(--color-text-muted)";
 
-                  <div className="stream-path" style={{ gridTemplateColumns: `repeat(${player.tribes.length}, 1fr)` }}>
-                    {player.tribes.map((tribe, index) => {
-                      const tribeColor =
-                        tribeColors.find((t) => t.name === tribe)?.color ||
-                        palette.warmGray;
-                      const isLastSegment = index === weeks.length - 1;
-                      const isEliminated =
-                        player.eliminated &&
-                        player.eliminated === index + 1;
-                      const isAfterElimination =
-                        player.eliminated &&
-                        player.eliminated < index + 1;
+            const statusLine = player.eliminated
+              ? `Episode ${player.eliminated}`
+              : "Still in";
+            const subLine = player.eliminated
+              ? player.eliminationType === "injury"
+                ? "Medical"
+                : "Tribal"
+              : null;
 
-                      return (
-                        <div
-                          key={`${player.name}-${index}`}
-                          className={`stream-segment ${
-                            isEliminated ? "eliminated-segment" : ""
-                          }`}
-                          style={{
-                            backgroundColor: isAfterElimination ? 'transparent' : tribeColor,
-                            opacity: isEliminated ? 0.5 : 1,
-                          }}
-                        >
-                          {isEliminated && (
-                            <span className="segment-eliminated-marker">
-                              {player.eliminationType === "injury" ? "💊" : "✕"}
-                            </span>
-                          )}
-                          {isLastSegment &&
-                            !isEliminated &&
-                            index < weeks.length - 1 && (
-                              <span className="segment-ongoing">→</span>
-                            )}
-                        </div>
-                      );
-                    })}
-                  </div>
+            return (
+              <article
+                key={player.name}
+                className="elimination-card"
+                role="listitem"
+                style={{
+                  backgroundColor: cardBg,
+                  color: textColor,
+                  borderColor: "var(--color-text)",
+                }}
+              >
+                <div className="elimination-card-photo-wrap">
+                  <img
+                    src={player.photo}
+                    alt={player.name}
+                    className="elimination-card-photo"
+                  />
                 </div>
-              );
-            })}
-          </div>
+                <div className="elimination-card-name">
+                  {player.name.split(" ")[0]}
+                </div>
+                <div
+                  className="elimination-card-episode"
+                  style={{ color: textColor }}
+                >
+                  {statusLine}
+                </div>
+                {subLine && (
+                  <div className="elimination-card-sub" style={{ color: mutedColor }}>
+                    {subLine}
+                  </div>
+                )}
+              </article>
+            );
+          })}
         </div>
       </div>
     </div>

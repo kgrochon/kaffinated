@@ -1,59 +1,15 @@
 import { useState, useMemo } from "react";
 import { type SeasonGroup, castData, eraStyles, getEra, palette } from "../../data/table";
-import { eliminated } from "../../data/connections";
+import { findEliminationRecord } from "./eliminationMatch";
 import "./styles/table.css";
 
-const normalizeName = (name: string) =>
-  name.toLowerCase().replace(/[^a-z\s]/g, "").trim();
+type TableProps = {
+  showSpoilers: boolean;
+};
 
-const firstName = (name: string) => normalizeName(name).split(/\s+/)[0] || "";
-
-function levenshteinDistance(a: string, b: string) {
-  const dp = Array.from({ length: a.length + 1 }, () =>
-    Array(b.length + 1).fill(0)
-  );
-
-  for (let i = 0; i <= a.length; i += 1) dp[i][0] = i;
-  for (let j = 0; j <= b.length; j += 1) dp[0][j] = j;
-
-  for (let i = 1; i <= a.length; i += 1) {
-    for (let j = 1; j <= b.length; j += 1) {
-      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-      dp[i][j] = Math.min(
-        dp[i - 1][j] + 1,
-        dp[i][j - 1] + 1,
-        dp[i - 1][j - 1] + cost
-      );
-    }
-  }
-
-  return dp[a.length][b.length];
-}
-
-function matchesEliminationRecord(playerName: string, eliminatedName: string) {
-  const playerNormalized = normalizeName(playerName);
-  const eliminatedNormalized = normalizeName(eliminatedName);
-
-  if (
-    playerNormalized.includes(eliminatedNormalized) ||
-    eliminatedNormalized.includes(playerNormalized)
-  ) {
-    return true;
-  }
-
-  const playerFirst = firstName(playerName);
-  const eliminatedFirst = firstName(eliminatedName);
-  if (!playerFirst || !eliminatedFirst) return false;
-  if (playerFirst === eliminatedFirst) return true;
-
-  return levenshteinDistance(playerFirst, eliminatedFirst) <= 1;
-}
-
-export default function Table() {
+export default function Table({ showSpoilers }: TableProps) {
     const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null);
     const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null);
-
-    console.log("Render - selected:", selectedPlayer, "hovered:", hoveredPlayer);
 
     const seasonGroups: SeasonGroup[] = useMemo(() => {
       const map = new Map<number, { subtitle: string; players: Map<string, { photo: string; tribe: string; placement: number }> }>();
@@ -87,7 +43,6 @@ export default function Table() {
     const highlightedSeasons = activePlayer ? new Set(playerSeasons.get(activePlayer) || []) : new Set<number>();
 
     const handlePlayerClick = (playerName: string) => {
-      console.log("Player clicked:", playerName, "current selected:", selectedPlayer);
       if (selectedPlayer === playerName) {
         setSelectedPlayer(null);
       } else {
@@ -96,7 +51,6 @@ export default function Table() {
     };
 
     const handleContainerClick = () => {
-      console.log("container clicked, current selected:", selectedPlayer);
       if (selectedPlayer !== null) {
         setSelectedPlayer(null);
         setHoveredPlayer(null);
@@ -181,10 +135,9 @@ export default function Table() {
                       const isPlayerDimmed = activePlayer !== null && !isThisPlayerActive && !isHighlighted;
                       const tribeColor = palette[player.tribe.toLowerCase() as keyof typeof palette] || palette.ink;
 
-                      // Check if player is eliminated
-                      const eliminationRecord = eliminated.find((el) =>
-                        matchesEliminationRecord(player.name, el.name)
-                      );
+                      const eliminationRecord = showSpoilers
+                        ? findEliminationRecord(player.name)
+                        : undefined;
                       const isEliminated = !!eliminationRecord;
                       const eliminationType = eliminationRecord?.type;
 
