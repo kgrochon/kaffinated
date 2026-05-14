@@ -5,7 +5,7 @@ import PlayerConnections from "../projects/survivor/PlayerConnections";
 import TribeEvolution from "../projects/survivor/TribeEvolution";
 import "./styles/survivor.css";
 
-type ChartView = "seasons" | "connections" | "placements" | "teams" | "evolution" | "parallel";
+type ChartView = "seasons" | "connections" | "evolution";
 
 export const Survivor = () => {
     const [activeChart, setActiveChart] = useState<ChartView>("seasons");
@@ -44,12 +44,6 @@ export const Survivor = () => {
                 >
                     Individual Journeys
                 </button>
-                {/* <button
-                    className={`survivor-nav-button ${activeChart === "parallel" ? "active" : ""}`}
-                    onClick={() => setActiveChart("parallel")}
-                >
-                    Parallel Tribes
-                </button> */}
             </div>
 
             {/* Chart Content */}
@@ -57,7 +51,6 @@ export const Survivor = () => {
                 {activeChart === "seasons" && <Table />}
                 {activeChart === "connections" && <PlayerConnections />}
                 {activeChart === "evolution" && <TribeEvolution />}
-                {/* {activeChart === "parallel" && <ParallelTribes />} */}
             </div>
         </div>
     );
