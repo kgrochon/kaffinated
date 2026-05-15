@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import headshot from "../assets/images/headshot.jpeg";
 import { GithubIcon, LinkedinIcon, MailIcon } from "../components/icons/Library";
+import { SURVIVOR_APP_URL } from "../config/survivorUrl";
 
 export const Home = () => {
     return (
@@ -25,9 +25,14 @@ export const Home = () => {
                         </p>
                     </section>
                     <div className="actions nav">
-                        <Link to="/survivor" className="button">
+                        <a
+                            href={SURVIVOR_APP_URL}
+                            className="button"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             Survivor
-                        </Link>
+                        </a>
                         {/* <Link to="/up-trip" className="button">
                             U.P Trip
                         </Link> */}
